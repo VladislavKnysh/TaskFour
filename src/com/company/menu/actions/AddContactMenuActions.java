@@ -1,8 +1,7 @@
 package com.company.menu.actions;
 
 import com.company.contact.Contact;
-import com.company.contact.ContactsList;
-import com.company.contact.contactsService.InMemoryContactsService;
+import com.company.contact.contactsService.ContactsService;
 
 import java.util.Scanner;
 
@@ -10,17 +9,28 @@ public class AddContactMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void doAction(InMemoryContactsService inMemoryContactsService) {
+    public void doAction(ContactsService contactsService) {
         System.out.println("Enter name of contact");
         String name = scanner.nextLine();
 
         System.out.println("Enter phone number of contact");
         String number = scanner.nextLine();
+        switch (checkNumber(number)) {
+            case CORRECT:
+                contactsService.add(new Contact(name, number));
+            break;
+            case INCORRECT:
+            System.out.println("Incorrect number");
+            break;
+            case MEDIOCRE:
+                contactsService.add(new Contact(name, ("+38"+number)));
+                break;
 
+        }
 
-        inMemoryContactsService.add(new Contact(name, number));
 
     }
+
 
     @Override
     public String getName() {
@@ -41,5 +51,22 @@ public class AddContactMenuActions implements MenuActions {
                 System.out.println("Emergency termination of the program");
                 return true;
         }
+    }
+
+    private NumberCondition checkNumber(String number) {
+        for (char c : number.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return NumberCondition.INCORRECT;
+            }
+        }
+        if (number.matches("(\\+380)[\\d]{9}")) {
+            return NumberCondition.CORRECT;
+        }else if (number.matches("(0)[\\d]{9}")){
+            return NumberCondition.MEDIOCRE;
+        }else {return NumberCondition.INCORRECT;}
+    }
+
+    enum NumberCondition{
+        CORRECT, INCORRECT, MEDIOCRE;
     }
 }

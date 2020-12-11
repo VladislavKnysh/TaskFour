@@ -7,4 +7,7 @@ public interface ContactsService {
     ContactsList getAll();
     void remove(int index);
     void add(Contact contact);
+    void searchName(String string);
+    void searchNumber(String string);
+
 }

@@ -2,6 +2,7 @@ package com.company.menu.actions;
 
 import com.company.contact.Contact;
 import com.company.contact.ContactsList;
+import com.company.contact.contactsService.ContactsService;
 import com.company.contact.contactsService.InMemoryContactsService;
 
 import java.util.Scanner;
@@ -10,8 +11,8 @@ public class ReadAllContactsMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void doAction(InMemoryContactsService inMemoryContactsService) {
-        ContactsList contactsList = inMemoryContactsService.getAll();
+    public void doAction(ContactsService contactsService) {
+        ContactsList contactsList = contactsService.getAll();
         if (contactsList.isEmpty()) {
             System.out.println("There is no contacts in your Memory Contacts Service");
         } else {

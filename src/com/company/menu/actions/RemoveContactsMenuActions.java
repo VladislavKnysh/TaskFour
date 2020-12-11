@@ -1,6 +1,7 @@
 package com.company.menu.actions;
 
 import com.company.contact.ContactsList;
+import com.company.contact.contactsService.ContactsService;
 import com.company.contact.contactsService.InMemoryContactsService;
 
 import java.util.Scanner;
@@ -9,19 +10,19 @@ public class RemoveContactsMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void doAction(InMemoryContactsService inMemoryContactsService) {
+    public void doAction(ContactsService contactsService) {
         System.out.println("Enter index to delete");
         int index = scanner.nextInt();
 
         scanner.nextLine();
 
 
-        if (inMemoryContactsService.getAll().isEmpty()) {
+        if (contactsService.getAll().isEmpty()) {
             System.out.println("There is no contacts to delete.");
-        } else if (index >= inMemoryContactsService.getAll().size()) {
-            inMemoryContactsService.remove(inMemoryContactsService.getAll().size() - 1);
+        } else if (index >= contactsService.getAll().size()) {
+            contactsService.remove(contactsService.getAll().size() - 1);
         } else {
-            inMemoryContactsService.remove(index);
+            contactsService.remove(index);
         }
 
     }
