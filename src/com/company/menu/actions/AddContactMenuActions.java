@@ -11,7 +11,30 @@ import java.util.stream.Stream;
 public class AddContactMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
+    @Override
+    public void doAction(ContactsService contactsService) {
+        System.out.println("Enter name of contact");
+        String name = scanner.nextLine();
 
+        System.out.println("Enter phone number of contact");
+        String number = scanner.nextLine();
+        String result = Stream.of(number)
+                .filter(s -> (s.matches("(\\+380)[\\d]{9}") || s.matches("(0)[\\d]{9}")))
+                .map(s -> {
+                    if (s.matches("(\\+380)[\\d]{9}")) {
+                        return s;
+                    } else {
+                        return "+38" + s;
+                    }
+                })
+                .collect(Collectors.joining());
+
+        if (Objects.nonNull(result)) {
+            contactsService.add(new Contact(name, result));
+        } else {
+            System.out.println("Incorrect number");
+        }
+    }
 
 
     @Override
