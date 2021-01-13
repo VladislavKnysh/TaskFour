@@ -3,7 +3,11 @@ package com.company.menu.actions;
 import com.company.contact.Contact;
 import com.company.contact.contactsService.ContactsService;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AddContactMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
@@ -15,20 +19,22 @@ public class AddContactMenuActions implements MenuActions {
 
         System.out.println("Enter phone number of contact");
         String number = scanner.nextLine();
-        switch (checkNumber(number)) {
-            case CORRECT:
-                contactsService.add(new Contact(name, number));
-            break;
-            case INCORRECT:
+        String result = Stream.of(number)
+                .filter(s -> (s.matches("(\\+380)[\\d]{9}") || s.matches("(0)[\\d]{9}")))
+                .map(s -> {
+                    if (s.matches("(\\+380)[\\d]{9}")) {
+                        return s;
+                    } else {
+                        return "+38" + s;
+                    }
+                })
+                .collect(Collectors.joining());
+
+        if (Objects.nonNull(result)) {
+            contactsService.add(new Contact(name, result));
+        } else {
             System.out.println("Incorrect number");
-            break;
-            case MEDIOCRE:
-                contactsService.add(new Contact(name, ("+38"+number)));
-                break;
-
         }
-
-
     }
 
 
@@ -51,22 +57,5 @@ public class AddContactMenuActions implements MenuActions {
                 System.out.println("Emergency termination of the program");
                 return true;
         }
-    }
-
-    private NumberCondition checkNumber(String number) {
-        for (char c : number.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return NumberCondition.INCORRECT;
-            }
-        }
-        if (number.matches("(\\+380)[\\d]{9}")) {
-            return NumberCondition.CORRECT;
-        }else if (number.matches("(0)[\\d]{9}")){
-            return NumberCondition.MEDIOCRE;
-        }else {return NumberCondition.INCORRECT;}
-    }
-
-    enum NumberCondition{
-        CORRECT, INCORRECT, MEDIOCRE;
     }
 }
