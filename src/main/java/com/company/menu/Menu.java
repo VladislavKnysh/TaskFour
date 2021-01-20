@@ -1,27 +1,18 @@
 package com.company.menu;
 
 import com.company.contact.contactsService.ContactsService;
-import com.company.contact.contactsService.InMemoryContactsService;
 import com.company.menu.actions.MenuActions;
+import lombok.Data;
 
 import java.util.Scanner;
 
+@Data
 public class Menu {
-    private MenuActions[] actions;
-    private Scanner scanner;
-    private ContactsService contactsService;
+    private final MenuActions[] actions;
+    private final Scanner scanner;
+    private final ContactsService contactsService;
 
-    public Menu(MenuActions[] actions, Scanner scanner) {
-        this.actions = actions;
-        this.scanner = scanner;
-        contactsService = new InMemoryContactsService();
-    }
 
-    public Menu(MenuActions[] actions, Scanner scanner, ContactsService contactsService) {
-        this.actions = actions;
-        this.scanner = scanner;
-        this.contactsService = contactsService;
-    }
 
     public void run() {
         while (true) {

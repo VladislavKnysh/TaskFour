@@ -2,7 +2,6 @@ package com.company.menu.actions;
 
 import com.company.contact.contactsService.ContactsService;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class SearchContactMenuAction implements MenuActions {
@@ -12,10 +11,13 @@ public class SearchContactMenuAction implements MenuActions {
     public void doAction(ContactsService contactsService) {
         SearchBy searchBy = chooseSearch();
         String string = getUsersString();
-        switch (searchBy){
-            case NUMBER -> contactsService.searchNumber(string);
-            case NAME -> contactsService.searchName(string);
-            default -> System.out.println("Emergency termination of the action.");
+        switch (searchBy) {
+            case NUMBER:
+                contactsService.searchNumber(string);
+            case NAME:
+                contactsService.searchName(string);
+            default:
+                System.out.println("Emergency termination of the action.");
         }
     }
 
@@ -58,12 +60,12 @@ public class SearchContactMenuAction implements MenuActions {
                 scanner.nextLine();
                 System.out.println("Oh, no! Something went wrong.");
 
-            return SearchBy.DEFAULT;
+                return SearchBy.DEFAULT;
         }
 
     }
 
-    private String getUsersString(){
+    private String getUsersString() {
         System.out.println("Enter your search request: ");
         return scanner.nextLine();
     }

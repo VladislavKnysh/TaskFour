@@ -15,7 +15,7 @@ public class Telephone {
         InMemoryContactsService contactsService = new InMemoryContactsService(makeContactsList());
         MenuActions[] menuActions = {new AddContactMenuActions(), new ReadAllContactsMenuActions(),
                 new RemoveContactsMenuActions(), new SearchContactMenuAction()};
-        Menu menu = new Menu(menuActions,scanner, contactsService);
+        Menu menu = new Menu(menuActions,scanner,contactsService);
         menu.run();
     }
 

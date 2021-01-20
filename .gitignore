@@ -2,3 +2,6 @@
 *.iml
 \out
 /out
+src/test
+\target
+src/main/resources/

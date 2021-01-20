@@ -1,8 +1,12 @@
 package com.company.contact;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Arrays;
 
 public class ContactsList {
+    @Setter @Getter
     private Contact[] contacts;
     private static final int DEFAULT_CAPACITY = 10;
 
