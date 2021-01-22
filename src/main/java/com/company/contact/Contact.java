@@ -3,8 +3,19 @@ package com.company.contact;
 import lombok.Data;
 
 @Data
+public abstract class Contact {
+    private String name;
+    private String info;
+    private Type Type;
 
-public class Contact {
-    private final String name;
-    private final String phone;
+    public Contact(String name, String info, Contact.Type type) {
+        this.name = name;
+        this.info = info;
+        Type = type;
+    }
+
+    public enum Type{
+        PHONE,
+        EMAIL;
+    }
 }
