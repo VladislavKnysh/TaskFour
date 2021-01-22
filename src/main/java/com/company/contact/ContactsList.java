@@ -31,7 +31,7 @@ public class ContactsList {
 
 
     public void add(Contact contact) {
-        if (contact != null) {
+        if (contacts != null) {
             if (size < newCapacity) {
                 contacts[size] = contact;
                 size++;

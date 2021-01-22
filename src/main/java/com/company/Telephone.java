@@ -1,8 +1,9 @@
 package com.company;
 
 import com.company.contact.Contact;
+import com.company.contact.EmailContact;
+import com.company.contact.NumberContact;
 import com.company.contact.ContactsList;
-import com.company.contact.contactsService.ContactsService;
 import com.company.contact.contactsService.InMemoryContactsService;
 import com.company.menu.Menu;
 import com.company.menu.actions.*;
@@ -13,18 +14,21 @@ public class Telephone {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         InMemoryContactsService contactsService = new InMemoryContactsService(makeContactsList());
-        MenuActions[] menuActions = {new AddContactMenuActions(), new ReadAllContactsMenuActions(),
-                new RemoveContactsMenuActions(), new SearchContactMenuAction()};
+        MenuActions[] menuActions = {new AddPhoneContactMenuActions(), new AddEmailContactMenuActions(),
+                new ReadAllContactsMenuActions(), new RemoveContactsMenuActions(),
+                new SearchContactMenuAction(), new ExportContactsInFileMenuActions()};
         Menu menu = new Menu(menuActions,scanner,contactsService);
         menu.run();
     }
 
     static ContactsList makeContactsList(){
         ContactsList contactsList = new ContactsList();
-        contactsList.add(new Contact("Vasya","+380663123411"));
-        contactsList.add(new Contact("Petya","+380991231231"));
-        contactsList.add(new Contact("Vanya","+380991435345"));
-        contactsList.add(new Contact("Kostya","+380345345345"));
+        contactsList.add(new NumberContact("Vasya", "+380663123411", Contact.Type.PHONE));
+        contactsList.add(new NumberContact("Petya","+380991231231", Contact.Type.PHONE));
+        contactsList.add(new NumberContact("Vanya","+380991435345", Contact.Type.PHONE));
+        contactsList.add(new NumberContact("Kostya","+380345345345", Contact.Type.PHONE));
+        contactsList.add(new EmailContact("Kostya","123sdfsd@mail.ru", Contact.Type.EMAIL));
+
 
         return contactsList;
     }

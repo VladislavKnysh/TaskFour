@@ -1,30 +1,39 @@
 package com.company.menu.actions;
 
 import com.company.contact.Contact;
-import com.company.contact.ContactsList;
 import com.company.contact.contactsService.ContactsService;
 
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class ReadAllContactsMenuActions implements MenuActions {
+public class AddEmailContactMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
     public void doAction(ContactsService contactsService) {
-        ContactsList contactsList = contactsService.getAll();
-        if (contactsList.isEmpty()) {
-            System.out.println("There is no contacts in your Memory Contacts Service");
+        System.out.println("Enter name of contact");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter email of contact");
+        String email = scanner.nextLine();
+        String result = Stream.of(email)
+                .filter(s -> (s.matches("\\w+[.]*\\w+[@]{1}\\w+([.]{1}\\w{2,3})")))
+                .collect(Collectors.joining());
+
+        if (Objects.nonNull(result)) {
+            contactsService.add(new Contact(name, result, Contact.Type.EMAIL) {
+            });
         } else {
-            for (int i = 0; i < contactsList.size(); i++) {
-                Contact contactToDisplay = contactsList.get(i);
-                System.out.println("#" + (i + 1) + " " + contactToDisplay.getName() + " " + contactToDisplay.getInfo());
-            }
+            System.out.println("Incorrect email");
         }
     }
 
+
     @Override
     public String getName() {
-        return "Read all contacts";
+        return "Add contact using email";
     }
 
     @Override

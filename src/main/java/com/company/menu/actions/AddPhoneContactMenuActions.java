@@ -1,6 +1,7 @@
 package com.company.menu.actions;
 
 import com.company.contact.Contact;
+import com.company.contact.NumberContact;
 import com.company.contact.contactsService.ContactsService;
 
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AddContactMenuActions implements MenuActions {
+public class AddPhoneContactMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -30,7 +31,8 @@ public class AddContactMenuActions implements MenuActions {
                 .collect(Collectors.joining());
 
         if (Objects.nonNull(result)) {
-            contactsService.add(new Contact(name, result));
+            contactsService.add(new Contact(name, result, Contact.Type.PHONE) {
+            });
         } else {
             System.out.println("Incorrect number");
         }
@@ -39,7 +41,7 @@ public class AddContactMenuActions implements MenuActions {
 
     @Override
     public String getName() {
-        return "Add contact";
+        return "Add contact using phone number";
     }
 
     @Override

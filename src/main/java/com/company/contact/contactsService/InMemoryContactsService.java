@@ -3,6 +3,7 @@ package com.company.contact.contactsService;
 import com.company.contact.Contact;
 import com.company.contact.ContactsList;
 
+import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +42,7 @@ public class InMemoryContactsService implements ContactsService {
             while (matcher.find()) {
 
                 System.out.println(contactsList.get(i).getName() +
-                        " - "+contactsList.get(i).getPhone());
+                        " - " + contactsList.get(i).getInfo());
 
             }
         }
@@ -52,13 +53,30 @@ public class InMemoryContactsService implements ContactsService {
     public void searchNumber(String string) {
         for (int i = 0; i < contactsList.size(); i++) {
             Pattern pattern = Pattern.compile(string);
-            Matcher matcher = pattern.matcher(contactsList.get(i).getPhone());
+            Matcher matcher = pattern.matcher(contactsList.get(i).getInfo());
             while (matcher.find()) {
 
                 System.out.println(contactsList.get(i).getName() +
-                        " - "+contactsList.get(i).getPhone());
+                        " - " + contactsList.get(i).getInfo());
 
             }
+        }
+    }
+
+    @Override
+    public void printToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Contacts.txt"))) {
+            for (int i = 0; i < contactsList.size(); i++) {
+                String type;
+                if (contactsList.get(i).getType().equals(Contact.Type.EMAIL)) {
+                    type = "Email";
+                } else {
+                    type = "Phone";
+                }
+                writer.write(contactsList.get(i).getName()+ " ["+type+ ": "+contactsList.get(i).getInfo()+"]\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

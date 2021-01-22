@@ -9,5 +9,6 @@ public interface ContactsService {
     void add(Contact contact);
     void searchName(String string);
     void searchNumber(String string);
+    void printToFile();
 
 }

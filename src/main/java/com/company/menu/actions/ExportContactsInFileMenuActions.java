@@ -1,30 +1,20 @@
 package com.company.menu.actions;
 
-import com.company.contact.Contact;
-import com.company.contact.ContactsList;
 import com.company.contact.contactsService.ContactsService;
 
 import java.util.Scanner;
 
-public class ReadAllContactsMenuActions implements MenuActions {
+public class ExportContactsInFileMenuActions implements MenuActions {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
     public void doAction(ContactsService contactsService) {
-        ContactsList contactsList = contactsService.getAll();
-        if (contactsList.isEmpty()) {
-            System.out.println("There is no contacts in your Memory Contacts Service");
-        } else {
-            for (int i = 0; i < contactsList.size(); i++) {
-                Contact contactToDisplay = contactsList.get(i);
-                System.out.println("#" + (i + 1) + " " + contactToDisplay.getName() + " " + contactToDisplay.getInfo());
-            }
-        }
+        contactsService.printToFile();
     }
 
     @Override
     public String getName() {
-        return "Read all contacts";
+        return "Export contacts to file";
     }
 
     @Override
