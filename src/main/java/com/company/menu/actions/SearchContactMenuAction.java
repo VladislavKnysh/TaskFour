@@ -12,10 +12,12 @@ public class SearchContactMenuAction implements MenuActions {
         SearchBy searchBy = chooseSearch();
         String string = getUsersString();
         switch (searchBy) {
-            case NUMBER:
+            case INFO:
                 contactsService.searchNumber(string);
+                break;
             case NAME:
                 contactsService.searchName(string);
+                break;
             default:
                 System.out.println("Emergency termination of the action.");
         }
@@ -47,12 +49,12 @@ public class SearchContactMenuAction implements MenuActions {
 
     private SearchBy chooseSearch() {
 
-        System.out.println("1 - Perform search by contact`s phone number." +
+        System.out.println("1 - Perform search by contact`s info." +
                 "\n2 - Perform search by contact`s name.");
         switch (scanner.nextInt()) {
             case 1:
                 scanner.nextLine();
-                return SearchBy.NUMBER;
+                return SearchBy.INFO;
             case 2:
                 scanner.nextLine();
                 return SearchBy.NAME;
@@ -71,7 +73,7 @@ public class SearchContactMenuAction implements MenuActions {
     }
 
     private enum SearchBy {
-        NAME, NUMBER, DEFAULT;
+        NAME, INFO, DEFAULT;
     }
 }
 

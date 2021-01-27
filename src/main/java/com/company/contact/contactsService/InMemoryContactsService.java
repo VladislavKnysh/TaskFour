@@ -73,7 +73,8 @@ public class InMemoryContactsService implements ContactsService {
                 } else {
                     type = "Phone";
                 }
-                writer.write(contactsList.get(i).getName()+ " ["+type+ ": "+contactsList.get(i).getInfo()+"]\n");
+                writer.write(contactsList.get(i).getName()+
+                        "["+type+ ": "+contactsList.get(i).getInfo()+"]\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
